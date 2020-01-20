@@ -31,5 +31,13 @@ Please for below stpes to run the application functionality-
 	
 9. Code can be review here-
 	https://github.com/aniketaag/Test-Application/tree/master/evolent
+	
+10. Technology used-
+		1. Spring MVC
+		2. h2 Inmemory DB
+		3. JDBC Templage
+		4. Spring AOP
+		5. Spring Transaction Management
+		6. Jackson for Rest API
 ---------------------------------------------------------------
 
