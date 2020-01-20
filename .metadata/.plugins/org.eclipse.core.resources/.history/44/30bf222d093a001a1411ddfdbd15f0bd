@@ -1,0 +1,5 @@
+package com.evolent.dao;
+
+public class UserRowMapper {
+
+}

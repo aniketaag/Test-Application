@@ -1,0 +1,9 @@
+
+public interface UserDAO {
+	public void save(User user);
+	public void update(User user);
+	public List<User> findAll();
+	public void deleteById(int id);
+	public void deleteAll();
+	public User findById(int id);
+}

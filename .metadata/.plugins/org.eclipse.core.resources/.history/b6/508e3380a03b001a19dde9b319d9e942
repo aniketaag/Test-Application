@@ -1,0 +1,42 @@
+package com.evolent.service;
+
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.evolent.dao.User;
+import com.evolent.dao.UserDaoImpl;
+
+@Service
+public class UserServiceImpl implements UserService {
+	
+	UserDaoImpl userDaoImpl;
+
+	public void setUserDaoImpl(UserDaoImpl userDaoImpl) {
+		this.userDaoImpl = userDaoImpl;
+	}
+
+	public int addUser(User user) {
+		return userDaoImpl.save(user);
+	}
+
+	public int updateUser(User user) {
+		return userDaoImpl.save(user);
+	}
+
+	public List<User> getAllUsers() {
+		return userDaoImpl.getAll();
+	}
+
+	public User getUser(int id) {
+		return userDaoImpl.get(id);
+	}
+
+	public int deleteUser(int id) {
+		return userDaoImpl.delete(id);
+	}
+
+	public int deleteAllUser(int id) {
+		return userDaoImpl.deleteAll();
+	}
+}

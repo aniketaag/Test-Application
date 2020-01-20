@@ -1,0 +1,11 @@
+user.phoneNumber.required=
+user.firstName.required=
+user.lastName.required=
+user.email.required=
+user.status.required=
+user.firstName.max=
+user.lastName.max=
+user.firstName=
+user.lastName=
+user.email=
+user.status=

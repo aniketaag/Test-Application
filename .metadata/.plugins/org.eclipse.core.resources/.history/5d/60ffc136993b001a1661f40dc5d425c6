@@ -1,0 +1,44 @@
+package com.evolent.validation;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import com.evolent.dao.User;
+
+public class UserValidator implements Validator {
+
+	public boolean supports(Class<?> clazz) {
+		return User.class.isAssignableFrom(clazz);
+	}
+
+	public void validate(Object target, Errors errors) {	
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required","* First name is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.required", "* Last name is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.required", "* Email is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "phoneNumber.required","* Phone number is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "status", "status.required", "* Status is required.");
+		
+		User user = (User) target;
+		
+		if (!user.getFirstName().matches("^[a-zA-Z]*$")) {
+			errors.rejectValue("firstName","firstName.required", "* Invalid Firstname");
+		} else if(user.getFirstName().length() > 30){
+			errors.rejectValue("firstName","firstName.required", "* Only upto 30 charecters are allowed ");
+		}
+		
+		if (!user.getLastName().matches("^[a-zA-Z]*$")) {
+			errors.rejectValue("lastName","lastName.required", "* Invalid Lastname");
+		} else if(user.getLastName().length() > 30){
+			errors.rejectValue("lastName","lastName.required", "* Only upto 30 charecters are allowed");
+		}
+		
+		if (!user.getEmail().matches("^(.+)@(.+)$")) {	
+			errors.rejectValue("email","email.required", "* Invalid Email");
+		}
+		
+		if (!user.getPhoneNumber().matches("[-\\s]\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}")) {
+			errors.rejectValue("phoneNumber","phoneNumber.length", "* Phone Number should be between 8 to 14 digits");
+		}
+	}
+}

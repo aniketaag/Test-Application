@@ -1,0 +1,40 @@
+package com.evolent.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.evolent.dao.User;
+import com.evolent.dao.UserDAO;
+
+public class UserServiceImpl implements UserService {
+	
+	@Autowired
+	UserDAO userdao;
+
+	public int addUser(User user) {
+		return userdao.save(user);
+	}
+
+	public int updateUser(User user) {
+		return userdao.save(user);
+	}
+
+	public List<User> getAllUsers() {
+		return userdao.getAll();
+	}
+
+	public User getUser(int id) {
+		return userdao.get(id);
+	}
+
+	public int deleteUser(int id) {
+		return userdao.delete(id);
+	}
+
+	public int deleteAllUser(int id) {
+
+		return userdao.deleteAll();
+	}
+
+}

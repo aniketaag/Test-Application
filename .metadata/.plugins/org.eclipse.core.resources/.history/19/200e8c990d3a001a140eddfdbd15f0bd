@@ -1,0 +1,22 @@
+package com.evolent.controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.evolent.dao.User;
+
+@Controller
+@RequestMapping("/evolent")  
+public class UserController {
+	 
+	 @RequestMapping(value = "/homepage", method = RequestMethod.GET)
+	 public String createUser(Model model) {
+	    // model.addAttribute("registration", new User());
+	     return "index";
+	 }
+	
+}

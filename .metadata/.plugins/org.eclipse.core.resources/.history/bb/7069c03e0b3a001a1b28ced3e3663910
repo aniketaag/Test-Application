@@ -1,0 +1,52 @@
+package dao;
+
+import java.sql.ResultSet;
+import java.util.List;
+
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.RowMapper;
+
+public class UserDAOImpl implements UserDAO {
+
+	JdbcTemplate template;    
+	public void setTemplate(JdbcTemplate template) {    
+		this.template = template;    
+	}
+	
+	public int save(User user) {
+		String sql = null;
+	//	sql="insert into Emp99(name,salary,designation) values('"+p.getName()+"',"+p.getSalary()+",'"+p.getDesignation()+"')";    
+		return template.update(sql); 		
+	}
+
+	public int update(User user) {
+		return 0;
+	}
+
+	public int deleteById(int id) {
+		String sql="delete from Emp99 where id="+id+"";    
+		return template.update(sql);
+	}
+
+	public int deleteAll() {
+		return 0;
+	}
+
+	public int findById(int id) {
+		return 0;
+	}
+	
+	public List<User> findAll() {
+		return template.query("select * from Emp99",new RowMapper<User>(){    
+			public User mapRow(ResultSet rs, int row) throws SQLException {    
+				User user=new User();    
+				user.setId(rs.getInt(1));    
+				user.setName(rs.getString(2));    
+				user.setSalary(rs.getFloat(3));    
+				user.setDesignation(rs.getString(4));    
+				return user;    
+			}    
+		});
+	}
+
+}

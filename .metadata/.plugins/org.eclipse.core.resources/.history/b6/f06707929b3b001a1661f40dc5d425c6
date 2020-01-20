@@ -1,0 +1,9 @@
+user.phoneNumber.required=
+user.firstName.required=
+user.lastName.required=
+user.email.required=
+user.status.required=
+user.firstName=
+user.lastName=
+user.email=
+user.status=

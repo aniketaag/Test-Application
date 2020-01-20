@@ -1,0 +1,8 @@
+package controllers;
+
+@Controller
+public class UserController {
+
+	@RequestMapping()
+	
+}

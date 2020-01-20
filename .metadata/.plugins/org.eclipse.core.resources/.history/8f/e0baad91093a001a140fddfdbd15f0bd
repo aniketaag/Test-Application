@@ -1,0 +1,49 @@
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>  
+<html>
+<head>
+<title>Registration Page</title>
+<style>
+.error {
+	color: #ff0000;
+	font-style: italic;
+}
+</style>
+</head>
+<body>
+
+<form:form method="POST" modelAttribute="user">
+<table>
+    <tr>
+        <td>First Name :</td>
+        <td><form:input path="firstName" /></td>
+        <td><labels path="firstName" cssClass="error" /></td>
+    </tr>
+    <tr>
+        <td>Last Name :</td>
+        <td><form:input path="firstName" /></td>
+        <td><labels path="firstName" cssClass="error" /></td>
+    </tr>
+    <tr>
+        <td>Email :</td>
+        <td><form:input path="firstName" /></td>
+        <td><labels path="firstName" cssClass="error" /></td>
+    </tr>
+    <tr>
+        <td>Phone Number :</td>
+        <td><form:input path="firstName" /></td>
+        <td><labels path="firstName" cssClass="error" /></td>
+    </tr>
+    <tr>
+        <td>Status (Active/Inactive) :</td>
+        <td><form:radiobutton path="gender" value="M" label="M" /> 
+            <form:radiobutton path="gender" value="F" label="F" /></td>
+        <td><form:errors path="gender" cssClass="error" /></td>	
+    </tr>
+    <tr>
+        <td colspan="3"><input type="submit" value="Register" ></td>
+    </tr>
+</table>
+</form:form>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+package com.evolent.dao;
+
+import java.util.List;
+
+public interface UserDao {
+	public int save(User user);
+	public List<User> getAll();
+	public int delete(int id);
+	public int deleteAll();
+	public User get(int id);
+}

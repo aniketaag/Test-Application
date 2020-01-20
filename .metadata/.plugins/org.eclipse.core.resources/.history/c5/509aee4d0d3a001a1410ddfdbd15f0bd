@@ -1,0 +1,17 @@
+package com.evolent.service;
+
+public interface UserService {
+
+	public UserDetail getUser(int id);
+	public List<User> getAllUsers();
+	public int addUser(User user);
+	public int updateUser(User user);
+	public int deleteUser(int id);
+	
+	
+	public UserDetail getUserDetail(int id);
+	public List<UserDetail> getAllUserDetail();
+	public int addUserDetail(UserDetail userDetail);
+	public int updateUserDetail(UserDetail userDetail);
+	public int deleteUserDetail(int id);
+}

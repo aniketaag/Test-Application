@@ -1,0 +1,39 @@
+package com.evolent.service;
+
+import java.util.List;
+
+import com.evolent.dao.User;
+
+public class UserServiceImpl implements UserService {
+
+	public int addUser(User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int updateUser(User user) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public List<User> getAllUsers() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public User getUser(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	public int deleteUser(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	public int deleteAllUser(int id) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+}

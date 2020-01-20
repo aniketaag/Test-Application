@@ -1,0 +1,10 @@
+package dao;
+
+public class User {
+
+	String firstName;
+	String lastName;
+	String email;
+	int phoneNumber;
+	String status;
+}

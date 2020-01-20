@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+	xsi:schemaLocation="
+    http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+    http://www.springframework.org/schema/aop
+    http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+    http://www.springframework.org/schema/context
+    http://www.springframework.org/schema/context/spring-context.xsd 
+    http://www.springframework.org/schema/mvc  
+    http://www.springframework.org/schema/mvc/spring-mvc.xsd
+    http://www.springframework.org/schema/tx 
+    http://www.springframework.org/schema/tx/spring-tx.xsd
+	http://www.springframework.org/schema/jdbc 
+	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+
+	<bean
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+ 	<mvc:annotation-driven />
+ 	
+	<context:annotation-config />
+	
+	<context:component-scan base-package="com.evolent.controllers" />
+	<context:component-scan base-package="com.evolent.service" />
+	<context:component-scan base-package="com.evolent.dao" />
+
+	<!-- support annotation transaction -->
+	<tx:annotation-driven transaction-manager="txManager" />
+
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="org.h2.Driver" />
+		<property name="url" value="jdbc:h2:~/test;INIT=RUNSCRIPT FROM 'classpath:scripts/create.sql'" />
+		<!-- <property name="url" value="jdbc:h2:~/test" /> -->
+		<!-- <property name="url" value="jdbc:h2:file:./notificacaodb;AUTO_SERVER=TRUE;mode=ORACLE;CACHE_SIZE=4096;EARLY_FILTER=1;MVCC=TRUE;LOCK_TIMEOUT=15000;" /> -->
+		<property name="username" value="sa" />
+		<property name="password" value="sa" />
+	</bean>
+	
+	 <jdbc:embedded-database id="dataSource" type="H2">
+		<jdbc:script location="classpath:sql/create-table.sql" />
+	</jdbc:embedded-database>
+
+	<!-- <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource" />
+	</bean> -->
+
+	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+
+	<bean id="userDaoImpl" class="com.evolent.dao.UserDaoImpl">
+		<property name="jdbcTemplate" ref="jdbcTemplate"></property>
+	</bean>
+	
+	<bean id="userServiceImpl" class="com.evolent.service.UserServiceImpl">
+		<property name="userDaoImpl" ref="userDaoImpl"></property>
+	</bean>
+	
+	<bean id="userController" class="com.evolent.controllers.UserController">
+		<property name="userServiceImpl" ref="userServiceImpl"></property>
+	</bean>
+	
+</beans>

@@ -1,0 +1,13 @@
+package dao;
+
+import java.util.List;
+
+public interface UserDAO {
+
+	public int save(User user);
+	public int update(User user);
+	public List<User> findAll();
+	public int deleteById(int id);
+	public void deleteAll();
+	public void findById(int id);
+}

@@ -1,0 +1,2 @@
+typeMismatch.user.phoneNumber=The phoneNumber needs to be a valid number.
+typeMismatch.java.lang.Integer=The given input is not a valid number.

@@ -1,0 +1,36 @@
+<%@ include file = "header.jsp" %>
+<form:form method="POST" action="/evolent/updateForm" modelAttribute="user">
+<table>
+    <tr>
+        <td>First Name :</td>
+        <td><form:input path="firstName" /></td>
+        <td><small><form:errors path="firstName" cssClass="error" /></small></td>
+    </tr>
+    <tr>
+        <td>Last Name :</td>
+        <td><form:input path="lastName" /></td>
+        <td><small><form:errors path="lastName" cssClass="error" /></small></td>
+    </tr>
+    <tr>
+        <td>Email :</td>
+        <td><form:input path="email" /></td>
+        <td><small><form:errors path="email" cssClass="error" /></small></td>
+    </tr>
+    <tr>
+        <td>Phone Number :</td>
+        <td><form:input path="phoneNumber" /></td>
+        <td><small><form:errors path="phoneNumber" cssClass="error" /></small></td>
+    </tr>
+    <tr>
+        <td>Status :</td>
+        <td><form:radiobutton path="status" value="Active" label="Active" /> 
+            <form:radiobutton path="status" value="Inactive" label="Inactive" /></td>
+        <td><small><form:errors path="status" cssClass="error" /></small></td>	
+    </tr>
+    <tr>
+    	<form:hidden path="id" />
+        <td colspan="3"><input type="submit" value="Update" ></td>
+    </tr>
+</table>
+</form:form>
+<%@ include file = "footer.jsp" %>

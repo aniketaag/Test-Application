@@ -1,0 +1,27 @@
+package com.evolent.aspect;
+
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class UserServiceAspect {
+	 
+		@Before("execution(* com.evolent.service.UserServiceImpl.*(..))")
+	    public void logBeforeAllMethods(JoinPoint joinPoint) 
+	    {
+	        System.out.println("****LoggingAspect.logBeforeAllMethods() : " + joinPoint.getSignature().getName());
+	    }
+	     
+	    @Before("execution(* com.evolent.service.UserServiceImpl.get*(..))")
+	    public void logBeforeGetUser(JoinPoint joinPoint) 
+	    {
+	        System.out.println("****LoggingAspect.logBeforeGetUser() : " + joinPoint.getSignature().getName());
+	    }
+	     
+	    @Before("execution(* com.evolent.service.UserServiceImpl.*(User user))")
+	    public void logBeforeCreateUser(JoinPoint joinPoint) 
+	    {
+	        System.out.println("****LoggingAspect.logBeforeCreateUser() : " + joinPoint.getSignature().getName());
+	    }
+}

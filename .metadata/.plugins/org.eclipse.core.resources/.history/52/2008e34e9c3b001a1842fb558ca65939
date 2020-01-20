@@ -1,0 +1,32 @@
+<%@ include file = "header.jsp" %>
+	<div>
+		<table border="1" cellpadding="5">
+			<caption><h2>List of users</h2></caption>
+			<p class="error">${message}</p>
+			<tr>
+				<th>ID</th>
+				<th>First Name</th>
+				<th>Last Name</th>
+				<th>Email</th>
+				<th>Phone Number</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+			<c:forEach var="user" items="${users}">
+				<tr>
+					<td><c:out value="${user.id}" /></td>
+					<td><c:out value="${user.firstName}" /></td>
+					<td><c:out value="${user.lastName}" /></td>
+					<td><c:out value="${user.email}" /></td>
+					<td><c:out value="${user.phoneNumber}" /></td>
+					<td><c:out value="${user.status}" /></td>
+					<td><spring:url value="/edituser/${user.id}" var="updateUrl" /> <spring:url value="/deleteuser/${user.id}" var="deleteUrl" />
+						<button class="btn btn-primary"onclick="location.href='${updateUrl}'">Edit</button>
+				  		<button class="btn btn-danger" onclick="location.href='${deleteUrl}'">Delete</button>
+                    </td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+	<div><a href="adduser">Add New User</a></div>
+<%@ include file = "footer.jsp" %>

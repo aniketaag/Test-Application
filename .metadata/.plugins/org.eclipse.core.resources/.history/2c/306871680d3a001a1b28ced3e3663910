@@ -1,0 +1,19 @@
+package controllers;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.servlet.ModelAndView;
+
+@RestController
+public class UserController {
+
+	@GetMapping("/homepage")
+	public ModelAndView createUser(){
+		ModelAndView mv = new ModelAndView();
+		System.out.println("caaaaaaaaaaaaaaaaaaaaa");
+		//mav.addObject("now");
+		mv.setViewName("index");
+		return mv;
+	}
+	
+}

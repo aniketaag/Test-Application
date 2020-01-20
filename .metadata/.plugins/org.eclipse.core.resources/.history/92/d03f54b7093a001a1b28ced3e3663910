@@ -1,0 +1,29 @@
+package dao;
+
+public class UserDAOImpl implements UserDAO {
+
+	public void save(User user) {
+		
+	}
+
+	public void update(User user) {
+		
+	}
+
+	public void findAll() {
+		
+	}
+
+	public void deleteById(int id) {
+		
+	}
+
+	public void deleteAll() {
+		
+	}
+
+	public void findById(int id) {
+		
+	}
+
+}

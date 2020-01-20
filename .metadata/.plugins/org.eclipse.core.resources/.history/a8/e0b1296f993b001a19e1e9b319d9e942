@@ -1,0 +1,13 @@
+package com.evolent.validation;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import com.evolent.dao.User;
+
+public class UserValidator implements Validator {
+
+
+
+}

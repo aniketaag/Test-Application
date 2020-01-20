@@ -1,0 +1,48 @@
+package com.evolent.validation;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
+
+import com.evolent.dao.User;
+
+public class UserValidator implements Validator {
+
+	public boolean supports(Class<?> clazz) {
+		return User.class.isAssignableFrom(clazz);
+	}
+
+	public void validate(Object target, Errors errors) {	
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required","* First name is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.required", "* Last name is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.required", "* Email is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "phoneNumber.required","* Phone number is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "status", "status.required", "* Status is required.");
+		User user = (User) target;
+		System.out.println(user.getPhoneNumber());
+		
+		String email_regex = "^(.+)@(.+)$";
+		String phone_regex = "^\\+(?:[0-9] ?){6,14}[0-9]$";
+		
+		if (!Pattern.compile(email_regex).matcher(user.getEmail()).matches()) {
+			errors.rejectValue("email","email.required", "Invalid Email");
+		}
+		
+		if (!Pattern.compile(phone_regex).matcher(user.getPhoneNumber()).matches()) {
+			errors.rejectValue("phoneNumber","phoneNumber.length", "Phone Number should be greater than 5");
+		}
+	}
+	
+	/*public void validateEmail(String email, Long id, Errors errors) {
+		String cleanEmail = StringUtils.trimToEmpty(email);
+		if (StringUtils.isBlank(cleanEmail)) {
+			errors.rejectValue("email", "validation.error.email.blank");
+		} else {
+			manager.findByEmail(cleanEmail).filter(user -> !user.getId().equals(id)).ifPresent(user -> errors.rejectValue("email", "validation.error.email.inUse"));
+		}
+	}*/
+
+}
