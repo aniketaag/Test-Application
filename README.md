@@ -1,7 +1,7 @@
 # Test-Application
 Test crud application
 ---------------------------------------------------------------
-Please for below stpes to run the application functionality-
+Please follow below stpes to run the application functionality-
 ---------------------------------------------------------------
 1. Command to download "Test-Application" project code -
 	1. Open GIT Bash
