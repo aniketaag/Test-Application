@@ -1,0 +1,13 @@
+package com.evolent.restapi;
+
+import java.util.List;
+
+import com.evolent.dao.User;
+import com.evolent.service.UserServiceImpl;
+import com.evolent.validation.UserValidator;
+
+@RestController
+public class UserRestController {
+	
+
+}

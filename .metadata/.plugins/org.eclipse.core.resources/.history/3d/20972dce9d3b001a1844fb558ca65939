@@ -1,0 +1,108 @@
+package com.evolent.controllers;
+
+import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
+import com.evolent.dao.User;
+import com.evolent.service.UserServiceImpl;
+import com.evolent.validation.UserValidator;
+
+@RestController
+public class UserController {
+
+	@Autowired
+	UserValidator userValidator;
+	
+	@Autowired
+	UserServiceImpl userServiceImpl;
+	
+	@InitBinder
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(userValidator);
+	}
+
+	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
+	public String listUsers(Model model) {
+		List<User> users = userServiceImpl.getAllUsers();
+		model.addAttribute("users", users);
+		return "index";
+	}
+
+	@RequestMapping(value = "/adduser", method = RequestMethod.GET)
+	public String createUser(Model model) {
+		model.addAttribute("user", new User());
+		return "add_user";
+	}
+	
+	@RequestMapping(value = "/edituser/{id}", method = RequestMethod.GET)
+	public String editUser(@PathVariable("id") int id,RedirectAttributes attributes, Model model) {
+		User user = null;
+		try{
+			user = userServiceImpl.getUser(id);
+			model.addAttribute("user", user);
+		}catch(DataAccessException de){
+			if(null == user){
+				 attributes.addFlashAttribute("message", "User not exist!");
+				return "redirect:/homepage";
+			}
+		}
+		return "edit_user";
+	}
+
+	@RequestMapping(value = "/submitForm", method = RequestMethod.POST)
+	public String submitForm(@ModelAttribute("user") User user, @Validated User validateduser, BindingResult bindingResult,RedirectAttributes attributes, Model model) {
+		if (bindingResult.hasErrors()) return "add_user";
+		try{
+			userServiceImpl.addUser(user);
+			attributes.addFlashAttribute("message", "User created successfully.");
+		}catch(DataAccessException de){
+			attributes.addFlashAttribute("message", de.getMessage());
+		}
+		return "redirect:/homepage";
+	}
+	
+	@RequestMapping(value = "/updateForm", method = RequestMethod.POST)
+	public String UpdateForm(@ModelAttribute("user") User user, @Validated User validateduser, BindingResult bindingResult,RedirectAttributes attributes, Model model) {
+		if (bindingResult.hasErrors()) return "edit_user";
+		try{
+			userServiceImpl.updateUser(user);
+			attributes.addFlashAttribute("message", "User updated successfully");
+		}catch(DataAccessException de){
+			attributes.addFlashAttribute("message", de.getMessage());
+		}
+		
+		return "redirect:/homepage";
+	}
+	
+	@RequestMapping(value = "/deleteuser/{id}", method = RequestMethod.GET)
+	public String deleteUser(@PathVariable("id") int id,RedirectAttributes attributes, Model model) {
+		try{
+			userServiceImpl.deleteUser(id);
+			attributes.addFlashAttribute("message", "User deleted!");
+		}catch(DataAccessException de){
+			attributes.addFlashAttribute("message", de.getMessage());
+		}	
+		return "redirect:/homepage";
+	}
+	
+	@RequestMapping(value = "errors", method = RequestMethod.GET)
+    public String renderErrorPage(HttpServletRequest httpRequest) {
+		return "redirect:/homepage";
+	}
+}
