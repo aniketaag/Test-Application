@@ -1,7 +1,7 @@
 <%@ include file="header.jsp"%>
 <div>
 	<h2>Add User</h2>
-	<form:form method="POST" action="submitForm" modelAttribute="user">
+	<form:form method="POST" action="createuser" modelAttribute="user">
 		<div class="form-group">
 			<label>First Name :</label>
 			<form:input path="firstName" class="form-control" />

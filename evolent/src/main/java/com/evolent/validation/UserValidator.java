@@ -14,32 +14,32 @@ public class UserValidator implements Validator {
 
 	public void validate(Object target, Errors errors) {
 
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "firstName", "firstName.required","First name is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "lastName", "lastName.required", "* Last name is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "email.required", "* Email is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "phoneNumber", "phoneNumber.required","* Phone number is required.");
-		ValidationUtils.rejectIfEmptyOrWhitespace(errors, "status", "status.required", "* Status is required.");
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, UserValConstants.FNAME_CODE, UserValConstants.FNAME_CODE,UserValConstants.FNAME_EMPTY_MSG);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, UserValConstants.LNAME_CODE, UserValConstants.LNAME_CODE, UserValConstants.LNAME_EMPTY_MSG);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, UserValConstants.EMAIL_CODE, UserValConstants.EMAIL_CODE, UserValConstants.EMAIL_EMPTY_MSG);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, UserValConstants.PHNUMBER_CODE, UserValConstants.PHNUMBER_CODE,UserValConstants.PHNUMBER_EMPTY_MSG);
+		ValidationUtils.rejectIfEmptyOrWhitespace(errors, UserValConstants.STATUS_CODE, UserValConstants.STATUS_CODE, UserValConstants.STATUS_EMPTY_MSG);
 		
 		User user = (User) target;
-		
-		if (!user.getFirstName().matches("^[a-zA-Z]*$")) {
-			errors.rejectValue("firstName","firstName.required", "* Invalid Firstname");
+
+		if (!user.getFirstName().matches(UserValConstants.NAME_REGEX)) {
+			errors.rejectValue(UserValConstants.FNAME_CODE,UserValConstants.FNAME_CODE, UserValConstants.FNAME_MSG);
 		} else if(user.getFirstName().length() > 30){
-			errors.rejectValue("firstName","firstName.required", "* Only upto 30 charecters are allowed");
+			errors.rejectValue(UserValConstants.FNAME_CODE,UserValConstants.FNAME_CODE, UserValConstants.NAME_LENGTH_MSG);
 		}
 		
-		if (!user.getLastName().matches("^[a-zA-Z]*$")) {
-			errors.rejectValue("lastName","lastName.required", "* Invalid Lastname");
+		if (!user.getLastName().matches(UserValConstants.NAME_REGEX)) {
+			errors.rejectValue(UserValConstants.LNAME_CODE,UserValConstants.LNAME_CODE, UserValConstants.LNAME_MSG);
 		} else if(user.getLastName().length() > 30){
-			errors.rejectValue("lastName","lastName.required", "* Only upto 30 charecters are allowed");
+			errors.rejectValue(UserValConstants.LNAME_CODE,UserValConstants.LNAME_CODE, UserValConstants.NAME_LENGTH_MSG);
 		}
 		
-		if (!user.getEmail().matches("(^$|^.*@.*\\..*$)")) {	
-			errors.rejectValue("email","email.required", "* Invalid Email");
+		if (!user.getEmail().matches(UserValConstants.EMAIL_REGEX)) {	
+			errors.rejectValue(UserValConstants.EMAIL_CODE,UserValConstants.EMAIL_CODE, UserValConstants.EMAIL_MSG);
 		}
 		
-		if (!user.getPhoneNumber().matches("^$|\\d{10}|(?:\\d{3}-){2}\\d{4}|\\(\\d{3}\\)\\d{3}-?\\d{4}")) {
-			errors.rejectValue("phoneNumber","phoneNumber.length", "* Invalid Phone Number");
+		if (!user.getPhoneNumber().matches(UserValConstants.PHNUMBER_REGEX)) {
+			errors.rejectValue(UserValConstants.PHNUMBER_CODE,UserValConstants.PHNUMBER_CODE,UserValConstants.PHNUMBER_MSG);
 		}
 	}
 }

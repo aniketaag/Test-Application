@@ -4,11 +4,14 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,27 +19,37 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.evolent.dao.User;
+import com.evolent.service.UserServiceImpl;
+import com.evolent.validation.UserValidator;
 
 @Controller
-public class UserController extends AbstractUserController{
+public class UserController {
 
-	/****** Fetch all users *******/
-	@RequestMapping(value = UserURIConstants.GET_ALL_USER, method = RequestMethod.GET)
+	@Autowired
+	UserValidator userValidator;
+	
+	@Autowired
+	UserServiceImpl userServiceImpl;
+	
+	@InitBinder
+	private void initBinder(WebDataBinder binder) {
+		binder.setValidator(userValidator);
+	}
+
+	@RequestMapping(value = "/homepage", method = RequestMethod.GET)
 	public String listUsers(Model model) {
 		List<User> users = userServiceImpl.getAllUsers();
 		model.addAttribute("users", users);
 		return "index";
 	}
-	
-	/******* Add user page*******/
-	@RequestMapping(value = UserURIConstants.CREATE_USER, method = RequestMethod.GET)
+
+	@RequestMapping(value = "/adduser", method = RequestMethod.GET)
 	public String createUser(Model model) {
 		model.addAttribute("user", new User());
 		return "add_user";
 	}
 	
-	/******* Update user page *******/
-	@RequestMapping(value = UserURIConstants.UPDATE_USER, method = RequestMethod.GET)
+	@RequestMapping(value = "/edituser/{id}", method = RequestMethod.GET)
 	public String editUser(@PathVariable("id") int id,RedirectAttributes attributes, Model model) {
 		User user = null;
 		try{
@@ -51,8 +64,7 @@ public class UserController extends AbstractUserController{
 		return "edit_user";
 	}
 
-	/******* Create user *******/
-	@RequestMapping(value = UserURIConstants.CREATE_USER, method = RequestMethod.POST)
+	@RequestMapping(value = "/submitForm", method = RequestMethod.POST)
 	public String submitForm(@ModelAttribute("user") User user, @Validated User validateduser, BindingResult bindingResult,RedirectAttributes attributes, Model model) {
 		if (bindingResult.hasErrors()) return "add_user";
 		try{
@@ -61,11 +73,10 @@ public class UserController extends AbstractUserController{
 		}catch(DataAccessException de){
 			attributes.addFlashAttribute("message", de.getMessage());
 		}
-		return "redirect:" + UserURIConstants.GET_ALL_USER;
+		return "redirect:/homepage";
 	}
 	
-	/******* Update user *******/
-	@RequestMapping(value = UserURIConstants.UPDATE_USER, method = RequestMethod.POST)
+	@RequestMapping(value = "/updateForm", method = RequestMethod.POST)
 	public String UpdateForm(@ModelAttribute("user") User user, @Validated User validateduser, BindingResult bindingResult,RedirectAttributes attributes, Model model) {
 		if (bindingResult.hasErrors()) return "edit_user";
 		try{
@@ -75,11 +86,10 @@ public class UserController extends AbstractUserController{
 			attributes.addFlashAttribute("message", de.getMessage());
 		}
 		
-		return "redirect:" + UserURIConstants.GET_ALL_USER;
+		return "redirect:/homepage";
 	}
 	
-	/******* Delete user *******/
-	@RequestMapping(value = UserURIConstants.DELETE_USER, method = RequestMethod.GET)
+	@RequestMapping(value = "/deleteuser/{id}", method = RequestMethod.GET)
 	public String deleteUser(@PathVariable("id") int id,RedirectAttributes attributes, Model model) {
 		try{
 			userServiceImpl.deleteUser(id);
@@ -87,12 +97,11 @@ public class UserController extends AbstractUserController{
 		}catch(DataAccessException de){
 			attributes.addFlashAttribute("message", de.getMessage());
 		}	
-		return "redirect:" + UserURIConstants.GET_ALL_USER;
+		return "redirect:/homepage";
 	}
 	
-	/******* Error handling *******/
-	@RequestMapping(value = UserURIConstants.ERRORS, method = RequestMethod.GET)
+	@RequestMapping(value = "errors", method = RequestMethod.GET)
     public String renderErrorPage(HttpServletRequest httpRequest) {
-		return "redirect:" + UserURIConstants.GET_ALL_USER;
+		return "redirect:/homepage";
 	}
 }

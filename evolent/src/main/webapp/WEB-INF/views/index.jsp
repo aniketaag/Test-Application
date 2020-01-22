@@ -23,7 +23,7 @@
 					<td><c:out value="${user.email}" /></td>
 					<td><c:out value="${user.phoneNumber}" /></td>
 					<td><c:out value="${user.status}" /></td>
-					<td><spring:url value="/edituser/${user.id}" var="updateUrl" /> <spring:url value="/deleteuser/${user.id}" var="deleteUrl" />
+					<td><spring:url value="/updateuser/${user.id}" var="updateUrl" /> <spring:url value="/deleteuser/${user.id}" var="deleteUrl" />
 						<button class="btn btn-primary"onclick="location.href='${updateUrl}'">Edit</button>
 				  		<button class="btn btn-danger" onclick="location.href='${deleteUrl}'">Delete</button>
                     </td>
@@ -33,7 +33,7 @@
 		</table>
 	</div>
 	<div>
-		<spring:url value="adduser" var="adduser" />
-			<button class="btn btn-primary"onclick="location.href='${adduser}'">Add New User</button>
+		<spring:url value="createuser" var="createuser" />
+			<button class="btn btn-primary"onclick="location.href='${createuser}'">Add New User</button>
 	</div>		
 <%@ include file = "footer.jsp" %>

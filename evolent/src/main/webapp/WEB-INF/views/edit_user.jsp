@@ -1,7 +1,7 @@
 <%@ include file="header.jsp"%>
 <div>
 	<h2>Edit User</h2>
-	<form:form method="POST" action="/evolent/updateForm" modelAttribute="user">
+	<form:form method="POST" action="/evolent/updateuser" modelAttribute="user">
 		<div class="form-group">
 			<label>First Name :</label>
 			<form:input path="firstName" class="form-control" />
