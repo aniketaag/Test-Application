@@ -3,19 +3,38 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:tx="http://www.springframework.org/schema/tx"
 	xmlns:jdbc="http://www.springframework.org/schema/jdbc" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:security="http://www.springframework.org/schema/security"
 	xsi:schemaLocation="
     http://www.springframework.org/schema/beans
-    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+    http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
     http://www.springframework.org/schema/aop
-    http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+    http://www.springframework.org/schema/aop/spring-aop-4.0.xsd
     http://www.springframework.org/schema/context
-    http://www.springframework.org/schema/context/spring-context-3.0.xsd 
+    http://www.springframework.org/schema/context/spring-context-4.0.xsd 
     http://www.springframework.org/schema/mvc  
-    http://www.springframework.org/schema/mvc/spring-mvc-3.0.xsd
+    http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
     http://www.springframework.org/schema/tx 
-    http://www.springframework.org/schema/tx/spring-tx.xsd
+    http://www.springframework.org/schema/tx/spring-tx-4.0.xsd
 	http://www.springframework.org/schema/jdbc 
-	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd">
+	http://www.springframework.org/schema/jdbc/spring-jdbc.xsd
+	http://www.springframework.org/schema/security 
+    https://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<security:http auto-config="true" use-expressions="true">
+		<security:intercept-url pattern="/resources/**" access="permitAll" />
+		<security:intercept-url pattern="/**" access="hasRole('ROLE_ADMIN')" />
+		<security:intercept-url pattern="/rest/**" access="hasRole('ROLE_ADMIN')" />
+		<security:logout logout-success-url="/" logout-url="/j_spring_security_logout" />
+	</security:http>
+
+	<security:authentication-manager>
+		<security:authentication-provider>
+			<security:user-service>
+				<security:user name="evolent" password="test123" authorities="ROLE_ADMIN" />
+			</security:user-service>
+		</security:authentication-provider>
+	</security:authentication-manager>
+
 
 	<bean
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
@@ -25,15 +44,16 @@
 
 	<aop:aspectj-autoproxy proxy-target-class="true" />
 	<mvc:annotation-driven />
-	<tx:annotation-driven proxy-target-class="true" transaction-manager="txManager" />
+	<tx:annotation-driven proxy-target-class="true"
+		transaction-manager="txManager" />
 
 	<context:annotation-config />
-	<mvc:resources mapping="/resources/**" location="/resources/css" cache-period="31556926"/>
+	<mvc:resources mapping="/resources/**" location="/resources/css"
+		cache-period="31556926" />
 	<context:component-scan base-package="com.evolent.controllers" />
 	<context:component-scan base-package="com.evolent.service" />
 	<context:component-scan base-package="com.evolent.dao" />
 	<context:component-scan base-package="com.evolent.validation" />
-	
 
 	<bean id="dataSource"
 		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -58,7 +78,9 @@
 	<bean id="userController" class="com.evolent.controllers.UserController" />
 	<bean id="userValidator" class="com.evolent.validation.UserValidator" />
 	<bean id="userAspect" class="com.evolent.aspect.UserServiceAspect" />
-	<bean name="viewResolver" class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
-    <bean name="jsonTemplate" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
- 
+	<bean name="viewResolver"
+		class="org.springframework.web.servlet.view.BeanNameViewResolver" />
+	<bean name="jsonTemplate"
+		class="org.springframework.web.servlet.view.json.MappingJackson2JsonView" />
+
 </beans>

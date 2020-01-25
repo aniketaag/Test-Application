@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.evolent.dao.User;
+import com.evolent.exception.UserNotFoundException;
 
 @Controller
 public class UserController extends AbstractUserController{
@@ -35,20 +36,20 @@ public class UserController extends AbstractUserController{
 		return "add_user";
 	}
 	
-	/******* Update user page *******/
-	@RequestMapping(value = UserURIConstants.UPDATE_USER, method = RequestMethod.GET)
+	/******* Edit user page *******/
+	@RequestMapping(value = UserURIConstants.EDIT_USER, method = RequestMethod.GET)
 	public String editUser(@PathVariable("id") int id,RedirectAttributes attributes, Model model) {
 		User user = null;
 		try{
 			user = userServiceImpl.getUser(id);
 			model.addAttribute("user", user);
+			return "edit_user";
 		}catch(DataAccessException de){
-			if(null == user){
-				 attributes.addFlashAttribute("message", "User not exist!");
-				return "redirect:/homepage";
-			}
+			attributes.addFlashAttribute("message", "User not exist!");
+		}catch(UserNotFoundException de){
+			attributes.addFlashAttribute("message", de.getMessage());
 		}
-		return "edit_user";
+		return "redirect:" + UserURIConstants.GET_ALL_USER;
 	}
 
 	/******* Create user *******/
@@ -59,7 +60,7 @@ public class UserController extends AbstractUserController{
 			userServiceImpl.addUser(user);
 			attributes.addFlashAttribute("message", "User created successfully.");
 		}catch(DataAccessException de){
-			attributes.addFlashAttribute("message", de.getMessage());
+			attributes.addFlashAttribute("message", "Exception Occured: Unable to create user.");
 		}
 		return "redirect:" + UserURIConstants.GET_ALL_USER;
 	}
@@ -72,6 +73,8 @@ public class UserController extends AbstractUserController{
 			userServiceImpl.updateUser(user);
 			attributes.addFlashAttribute("message", "User updated successfully");
 		}catch(DataAccessException de){
+			attributes.addFlashAttribute("message", "Exception Occured: Unable to update user.");
+		}catch(UserNotFoundException de){
 			attributes.addFlashAttribute("message", de.getMessage());
 		}
 		
@@ -85,6 +88,8 @@ public class UserController extends AbstractUserController{
 			userServiceImpl.deleteUser(id);
 			attributes.addFlashAttribute("message", "User deleted!");
 		}catch(DataAccessException de){
+			attributes.addFlashAttribute("message", "Exception Occured: Unable to delete user.");
+		}catch(UserNotFoundException de){
 			attributes.addFlashAttribute("message", de.getMessage());
 		}	
 		return "redirect:" + UserURIConstants.GET_ALL_USER;

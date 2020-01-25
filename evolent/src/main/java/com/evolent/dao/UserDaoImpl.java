@@ -10,12 +10,14 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.simple.SimpleJdbcInsert;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.evolent.exception.UserNotFoundException;
+
 public class UserDaoImpl implements UserDao {
 	
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	@Transactional
+	@Transactional(rollbackFor=DataAccessException.class, readOnly = true)
 	public int save(User user) throws DataAccessException {
 		SimpleJdbcInsert simpleJdbcInsert = new SimpleJdbcInsert(jdbcTemplate);
 		simpleJdbcInsert.withTableName("user").usingGeneratedKeyColumns("id");
@@ -30,35 +32,50 @@ public class UserDaoImpl implements UserDao {
 	}
 	
 	@Transactional
-	public int update(User user) throws DataAccessException {
+	public int update(User user) throws DataAccessException, UserNotFoundException {
 		int resp = jdbcTemplate.update("update user set first_name=?, last_name=?, email=?, phone_number=?, status=? where id = ?",
 				user.firstName, user.lastName, user.email, user.phoneNumber, user.status, user.id);
-		System.out.println(user);
+		if(resp == 0){
+			throw new UserNotFoundException("User not found");
+		}
 		return resp;
 	}
 
 	@Transactional
 	public List<User> getAll() throws DataAccessException {
-		List<User> user = (List<User>) jdbcTemplate.query("select * from user", new UserRowMapper());
-		return user;
+		List<User> users = (List<User>) jdbcTemplate.query("select * from user", new UserRowMapper());
+		if(users.size() < 1){
+			throw new UserNotFoundException("User not found");
+		}
+		
+		return users;
 	}
 
 	@Transactional
-	public int delete(int id) throws DataAccessException {
+	public int delete(int id) throws DataAccessException,UserNotFoundException {
 		System.out.println("delete service" + id);
 		int resp = jdbcTemplate.update("delete from user where id = ?", id);
+		if(resp == 0){
+			throw new UserNotFoundException("User not found");
+		}
 		return resp;
 	}
 
 	@Transactional
-	public int deleteAll() throws DataAccessException {
+	public int deleteAll() throws DataAccessException,UserNotFoundException {
 		int resp = jdbcTemplate.update("delete from user");
+		if(resp == 0){
+			throw new UserNotFoundException("User not found");
+		}
 		return resp;
 	}
 	
 	@Transactional
-	public User get(int id) throws DataAccessException {
+	public User get(int id) throws DataAccessException,UserNotFoundException {
 		User user = (User) jdbcTemplate.queryForObject("select * from user where id = ?", new Object[] { id }, new UserRowMapper());
+		if(null == user){
+			throw new UserNotFoundException("User not found");
+		}
 		return user;
 	}
 }

@@ -8,6 +8,7 @@ import com.evolent.dao.User;
 
 public class UserValidator implements Validator {
 
+	final int MAX_LENGTH = 30;
 	public boolean supports(Class<?> clazz) {
 		return User.class.isAssignableFrom(clazz);
 	}
@@ -24,13 +25,13 @@ public class UserValidator implements Validator {
 
 		if (!user.getFirstName().matches(UserValConstants.NAME_REGEX)) {
 			errors.rejectValue(UserValConstants.FNAME_CODE,UserValConstants.FNAME_CODE, UserValConstants.FNAME_MSG);
-		} else if(user.getFirstName().length() > 30){
+		} else if(user.getFirstName().length() > MAX_LENGTH){
 			errors.rejectValue(UserValConstants.FNAME_CODE,UserValConstants.FNAME_CODE, UserValConstants.NAME_LENGTH_MSG);
 		}
 		
 		if (!user.getLastName().matches(UserValConstants.NAME_REGEX)) {
 			errors.rejectValue(UserValConstants.LNAME_CODE,UserValConstants.LNAME_CODE, UserValConstants.LNAME_MSG);
-		} else if(user.getLastName().length() > 30){
+		} else if(user.getLastName().length() > MAX_LENGTH){
 			errors.rejectValue(UserValConstants.LNAME_CODE,UserValConstants.LNAME_CODE, UserValConstants.NAME_LENGTH_MSG);
 		}
 		

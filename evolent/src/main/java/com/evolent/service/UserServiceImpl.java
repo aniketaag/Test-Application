@@ -8,33 +8,31 @@ import org.springframework.stereotype.Service;
 
 import com.evolent.dao.User;
 import com.evolent.dao.UserDaoImpl;
+import com.evolent.exception.UserNotFoundException;
 
 @Service
 public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDaoImpl userDaoImpl;
 
-	public int addUser(User user) throws DataAccessException{
-		return userDaoImpl.save(user);
+	public void addUser(User user) throws DataAccessException,UserNotFoundException{
+		userDaoImpl.save(user);
 	}
 
-	public int updateUser(User user) throws DataAccessException{
-		return userDaoImpl.update(user);
+	public void updateUser(User user) throws DataAccessException, UserNotFoundException{
+		userDaoImpl.update(user);
 	}
 
-	public List<User> getAllUsers() throws DataAccessException{
+	public List<User> getAllUsers() throws DataAccessException,UserNotFoundException{
 		return userDaoImpl.getAll();
 	}
 
-	public User getUser(int id) throws DataAccessException {
+	public User getUser(int id) throws DataAccessException,UserNotFoundException {
 		return userDaoImpl.get(id);
 	}
 
-	public int deleteUser(int id) throws DataAccessException{
-		return userDaoImpl.delete(id);
+	public void deleteUser(int id) throws DataAccessException,UserNotFoundException{
+		userDaoImpl.delete(id);
 	}
 
-	public int deleteAllUser() throws DataAccessException{
-		return userDaoImpl.deleteAll();
-	}
 }

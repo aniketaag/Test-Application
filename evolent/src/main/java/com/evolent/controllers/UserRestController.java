@@ -2,6 +2,7 @@ package com.evolent.controllers;
 
 import java.util.List;
 
+import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.evolent.controllers.AbstractUserController;
 import com.evolent.dao.User;
+import com.evolent.exception.UserNotFoundException;
 
 @RestController
 public class UserRestController extends AbstractUserController{
@@ -40,7 +42,7 @@ public class UserRestController extends AbstractUserController{
 	
 	/******* Create user *******/
 	@RequestMapping(value = UserURIConstants.CREATE_REST_USER, method=RequestMethod.POST)
-	public ResponseEntity<?> createEmployee( @Validated @RequestBody User user, BindingResult bindingResult) {
+	public ResponseEntity<?> createUser( @Validated @RequestBody User user, BindingResult bindingResult) {
 		
 		if (bindingResult.hasErrors()){
 			return new ResponseEntity<List<FieldError>>(bindingResult.getFieldErrors(), HttpStatus.NOT_FOUND);
@@ -48,7 +50,7 @@ public class UserRestController extends AbstractUserController{
 		
 		try{
 			userServiceImpl.addUser(user);
-			return new ResponseEntity<User>(user, HttpStatus.OK);
+			return new ResponseEntity<User>(user, HttpStatus.CREATED);
 		} catch(Exception e){
 		     return new ResponseEntity<String>("Exception Occurred", HttpStatus.NOT_FOUND);
 		}
@@ -61,12 +63,13 @@ public class UserRestController extends AbstractUserController{
 		if (bindingResult.hasErrors()){
 			return new ResponseEntity<List<FieldError>>(bindingResult.getFieldErrors(), HttpStatus.NOT_FOUND);
 		}
-		
 		try{
 			userServiceImpl.updateUser(user);
 			return new ResponseEntity<String>("User updated", HttpStatus.OK);
-		} catch(Exception e){
+		} catch(DataAccessException e){
 		     return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
+		} catch(UserNotFoundException de){
+			 return new ResponseEntity<String>(de.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 	
@@ -77,8 +80,10 @@ public class UserRestController extends AbstractUserController{
 		try{
 			userServiceImpl.deleteUser(id);
 			return new ResponseEntity<String>("User deleted", HttpStatus.OK);
-		} catch(Exception e){
-		     return new ResponseEntity<String>("Exception Occurred", HttpStatus.NOT_FOUND);
+		} catch(DataAccessException e){
+		     return new ResponseEntity<String>("User not found", HttpStatus.NOT_FOUND);
+		} catch(UserNotFoundException de){
+			 return new ResponseEntity<String>(de.getMessage(), HttpStatus.NOT_FOUND);
 		}
 	}
 }

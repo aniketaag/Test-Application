@@ -5,7 +5,8 @@ public class UserURIConstants {
 	public static final String GET_USER = "/user/{id}";
 	public static final String GET_ALL_USER = "/users";
 	public static final String CREATE_USER = "/createuser";
-	public static final String UPDATE_USER = "/updateuser/{id}";
+	public static final String EDIT_USER = "/updateuser/{id}";
+	public static final String UPDATE_USER = "/updateuser";
 	public static final String DELETE_USER = "/deleteuser/{id}";
 	public static final String ERRORS = "/errors";
 	
