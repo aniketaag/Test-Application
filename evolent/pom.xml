@@ -79,6 +79,7 @@
 			<artifactId>spring-jdbc</artifactId>
 			<version>5.2.2.RELEASE</version>
 		</dependency>
+		<!-- ********************* AOP ************************** -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
@@ -94,6 +95,7 @@
 			<artifactId>aspectjweaver</artifactId>
 			<version>1.8.9</version>
 		</dependency>
+		<!-- ********************* AOP ************************** -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-webmvc</artifactId>
@@ -129,6 +131,7 @@
 			<artifactId>jackson-databind</artifactId>
 			<version>2.9.5</version>
 		</dependency>
+		<!-- ********************* Spring Security ************************** -->
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-core</artifactId>
@@ -144,6 +147,7 @@
 			<artifactId>spring-security-config</artifactId>
 			<version>3.1.1.RELEASE</version>
 		</dependency>
+		<!-- ********************* Spring Security ************************** -->
 	</dependencies>
 	<build>
 		<finalName>evolent</finalName>

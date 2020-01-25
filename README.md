@@ -8,26 +8,37 @@ Please follow below stpes to run the application functionality-
 	2. Go to suitable path.
 	3. Run below command to make a clone of Test-Application-
 		git clone https://github.com/aniketaag/Test-Application.git
+	4. Else go to below path and download the code repository.
+		https://github.com/aniketaag/Test-Application/tree/master/evolent
 
-2. In Eclips,Import project as Exsting Maven Project.
+2. In Eclips, Import project as Exsting Maven Project.
 
 3. Run the application on (Tomcat 7) server.
 
-4. Hit the below Url to Add new user-
-	http://localhost:8080/evolent/adduser
+4. Login credentials -
+	http://localhost:8080/evolent/spring_security_login
+	username = test
+	password = test123
 
-5. To perfom operations on users hit below url-
-	http://localhost:8080/evolent/homepage
-	
-6. Edit, Update or delete the user on below request-
-	http://localhost:8080/evolent/homepage
+5. Rest API URL's- (Postman application can be used)
+		List of users - http://localhost:8080/evolent/rest/users
+		Get a user	- http://localhost:8080/evolent/rest/user/{id}
+		Create user - http://localhost:8080/rest/user/create
+		Update User - http://localhost:8080/rest/user/update/{id}
+		Delete User - http://localhost:8080/rest/user/delete/{id}
 
-7. Hit below url to generate REST API request-
-	For all users - http://localhost:8080/evolent/rest/users
-	For specific user - http://localhost:8080/evolent/rest/user/{id}
+6. CRUD Application URL's -
+		Home Page 	- http://localhost:8080/evolent/users
+		Create User - http://localhost:8080/evolent/createuser
+		Edit User 	- http://localhost:8080/updateuser/{id}
+		Update User - http://localhost:8080/updateuser
+		Delete User - http://localhost:8080/deleteuser/{id}
 
+7. Junit and Mockito Testcase-
+	Run JUnit Test for Rest API application. 
+		
 8. For any HttpStatus response error, Redirected to below url-
-	http://localhost:8080/evolent/homepage
+	http://localhost:8080/evolent/users
 	
 9. Code can be review here-
 	https://github.com/aniketaag/Test-Application/tree/master/evolent
@@ -35,9 +46,11 @@ Please follow below stpes to run the application functionality-
 10. Technology used-
 		1. Spring MVC
 		2. h2 Inmemory DB
-		3. JDBC Templage
+		3. JDBC Template
 		4. Spring AOP
 		5. Spring Transaction Management
-		6. Jackson for Rest API
+		6. JUnit and Mockito.
+		7. Bootstrap CSS.
+		8. Spring Security. 
+		9. Postman Application for Rest.
 ---------------------------------------------------------------
-

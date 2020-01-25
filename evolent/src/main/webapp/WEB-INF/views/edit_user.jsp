@@ -1,7 +1,8 @@
 <%@ include file="header.jsp"%>
+<h2>Edit User</h2>
 <div>
-	<h2>Edit User</h2>
-	<form:form method="PUT" action="/evolent/updateuser" modelAttribute="user">
+	<form:form method="PUT" action="/evolent/updateuser"
+		modelAttribute="user">
 		<div class="form-group">
 			<label>First Name :</label>
 			<form:input path="firstName" class="form-control" />
@@ -33,9 +34,9 @@
 			<small><form:errors path="status" cssClass="error" /></small>
 		</div>
 
-    	<form:hidden path="id" />
-        <div>
-			<input type="submit" value="Update" >
+		<form:hidden path="id" />
+		<div>
+			<input type="submit" value="Update">
 		</div>
 	</form:form>
 </div>

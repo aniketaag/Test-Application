@@ -105,7 +105,6 @@ public class UserRestControllerTest {
                 post(UserURIConstants.CREATE_REST_USER)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(asJsonString(user)))
-        		.andDo(print())
         		.andExpect(status().isCreated());
 	}
 
@@ -126,7 +125,6 @@ public class UserRestControllerTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(1)))
-                .andDo(print())
                 .andExpect(jsonPath("$.firstName", is("ABC")));
         verify(userserviceimpl, times(1)).getUser(1);
         verifyNoMoreInteractions(userserviceimpl);

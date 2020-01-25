@@ -1,5 +1,6 @@
 package com.evolent.controllers;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,8 +25,13 @@ public class UserController extends AbstractUserController{
 	/****** Fetch all users *******/
 	@RequestMapping(value = UserURIConstants.GET_ALL_USER, method = RequestMethod.GET)
 	public String listUsers(Model model) {
-		List<User> users = userServiceImpl.getAllUsers();
-		model.addAttribute("users", users);
+		List<User> users = new ArrayList<User>();
+		try{
+			users = userServiceImpl.getAllUsers();
+			model.addAttribute("users", users);
+		}catch(UserNotFoundException de){
+			model.addAttribute("users", users);
+		}
 		return "index";
 	}
 	

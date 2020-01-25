@@ -15,5 +15,4 @@ public class UserURIConstants {
 	public static final String CREATE_REST_USER = "/rest/user/create";
 	public static final String UPDATE_REST_USER = "/rest/user/update/{id}";
 	public static final String DELETE_REST_USER = "/rest/user/delete/{id}";
-
 }

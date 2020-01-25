@@ -44,16 +44,11 @@ public class UserDaoImpl implements UserDao {
 	@Transactional
 	public List<User> getAll() throws DataAccessException {
 		List<User> users = (List<User>) jdbcTemplate.query("select * from user", new UserRowMapper());
-		if(users.size() < 1){
-			throw new UserNotFoundException("User not found");
-		}
-		
 		return users;
 	}
 
 	@Transactional
 	public int delete(int id) throws DataAccessException,UserNotFoundException {
-		System.out.println("delete service" + id);
 		int resp = jdbcTemplate.update("delete from user where id = ?", id);
 		if(resp == 0){
 			throw new UserNotFoundException("User not found");

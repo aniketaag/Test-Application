@@ -1,28 +1,30 @@
 package com.evolent.aspect;
 
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
 import org.aspectj.lang.annotation.Aspect;
-import org.aspectj.lang.annotation.Before;
+
+import com.evolent.dao.User;
 
 @Aspect
 public class UserServiceAspect {
 	 
 	     
-	    @Before("execution(* com.evolent.service.UserServiceImpl.add*(..))")
-	    public void logBeforeCreateUser(JoinPoint joinPoint) 
+		@After("execution(* com.evolent.service.UserServiceImpl.add*(..))&&" + "args(user,..)")
+	    public void logAfterCreateUser(JoinPoint joinPoint, User user) 
 	    {
-	        System.out.println("Method " + joinPoint.getSignature().getName() + " called" );
+	        System.out.println("User created: " + user );
 	    }
 	    
-	    @Before("execution(* com.evolent.service.UserServiceImpl.update*(*))")
-	    public void logBeforeUpdateUser(JoinPoint joinPoint) 
+	    @After("execution(* com.evolent.service.UserServiceImpl.update*(*))&&" + "args(user,..)")
+	    public void logAfterUpdateUser(JoinPoint joinPoint, User user) 
 	    {
-	    	System.out.println("Method " + joinPoint.getSignature().getName() + " called");
+	    	System.out.println("User updated: " + user );
 	    }
 	    
-	    @Before("execution(* com.evolent.service.UserServiceImpl.delete*(*))")
-	    public void logBeforeDeleteUser(JoinPoint joinPoint) 
+	    @After("execution(* com.evolent.service.UserServiceImpl.delete*(*))&&" + "args(id,..)")
+	    public void logAfterDeleteUser(JoinPoint joinPoint, int id) 
 	    {
-	    	System.out.println("Method " + joinPoint.getSignature().getName() + " called");
+	    	System.out.println("User deleted: " + id );
 	    }
 }

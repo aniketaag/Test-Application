@@ -1,6 +1,6 @@
 <%@ include file="header.jsp"%>
+<h2>Add User</h2>
 <div>
-	<h2>Add User</h2>
 	<form:form method="POST" action="createuser" modelAttribute="user">
 		<div class="form-group">
 			<label>First Name :</label>
