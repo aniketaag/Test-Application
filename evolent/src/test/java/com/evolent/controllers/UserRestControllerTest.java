@@ -44,7 +44,6 @@ public class UserRestControllerTest {
         MockitoAnnotations.initMocks(this);
         mockMvc = MockMvcBuilders
                 .standaloneSetup(userRestController)
-              //  .addFilters(new CORSFilter())
                 .build();
     }
 
@@ -59,7 +58,6 @@ public class UserRestControllerTest {
         mockMvc.perform(get(UserURIConstants.GET_REST_ALL_USER))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                //.andExpect(jsonPath("$", hasSize(2)))
                  .andExpect(jsonPath("$[0].id", is(1)))
                  .andExpect(jsonPath("$[0].firstName", is("ABC")))
                 .andExpect(jsonPath("$[1].id", is(2)))
