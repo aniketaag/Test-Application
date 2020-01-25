@@ -20,6 +20,20 @@
 	color: #ff0000;
 	font-style: italic;
 }
+
+tbody {
+    counter-reset: rowNumber;
+}
+
+tbody tr {
+    counter-increment: rowNumber;
+}
+
+tbody tr td:first-child::before {
+    content: counter(rowNumber);
+    min-width: 1em;
+    margin-right: 0.5em;
+}
 </style>
 </head>
 <body>
